@@ -1,18 +1,11 @@
-from NewCardGame.functions import *
+from tkinter import Tk
+from random import randint
 import pygame
-import os,sys
-import random
-
-WINDOW_WIDTH = 1200
-WINDOW_HEIGHT = 800
-WINDOW = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT))
-BG = [pygame.image.load("Cards/table.jpg"),(0,0)]
-WINDOW_CAPTION = pygame.display.set_caption("Durak Reborn 19.10.2019")
 
 def shuffle(list):
     randomlist = []
     for q in range(len(list)):
-        card = list.pop(random.randint(0, len(list) - 1))
+        card = list.pop(randint(0, len(list) - 1))
         randomlist.append(card)
     return randomlist
 
@@ -25,7 +18,7 @@ def fill_defendlist():
         defend[i] = ''
     return defend
 
-def suit(trumpcard):
+def card_suit(trumpcard):
     suit = ''
     for symbol in trumpcard:
         suit += symbol
@@ -33,6 +26,22 @@ def suit(trumpcard):
             suit = ''
 
     return suit
+
+def test():
+    global OPP_HAND,MY_HAND,CARD_LIST
+
+    for i in range(15):
+        OPP_HAND.append(CARD_LIST[randint(0,len(CARD_LIST)-1)])
+    for i in range(10):
+        TABLE.append(CARD_LIST[randint(0,len(CARD_LIST)-1)])
+
+root = Tk()
+WINDOW_HEIGHT = root.winfo_screenheight()
+WINDOW_WIDTH = root.winfo_screenwidth()
+
+WINDOW = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+BG = pygame.image.load("Cards/table2.png")
+WINDOW_CAPTION = pygame.display.set_caption("Durak Reborn 19.10.2019")
 
 CARD_LIST = shuffle(["6_Bub",
              "6_heart",
@@ -73,16 +82,14 @@ CARD_LIST = shuffle(["6_Bub",
 OPP_HAND = []
 TABLE = []
 DEFEND = fill_defendlist()
-print(DEFEND)
-#MY_HAND = ["9_Bub","9_Kr","9_pik"]
 MY_HAND = []
 
-TRUMPCARD = CARD_LIST.pop(random.randint(0, len(CARD_LIST) - 1))
+TRUMPCARD = CARD_LIST.pop(randint(0, len(CARD_LIST) - 1))
 CARD_LIST.append(TRUMPCARD)
-TRUMPSUIT = suit(TRUMPCARD)
-COVER  = 'Card.jpg'
+TRUMPSUIT = card_suit(TRUMPCARD)
+COVER = 'Dalaran.png'
 
 CARD_SIZE_MyHand = [125,100]
 CARD_SIZE_OppHand = [125,100]
 CARD_SIZE_Table = [125,100]
-CARD_SIZE_DefList =  [125,100]
+CARD_SIZE_DefList = [125,100]
