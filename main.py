@@ -1,10 +1,11 @@
-from NewCardGame.functions import *
+from NewCardGame.functions import card_balance,card_balanceBOT,events,update_window
 import pygame
 
 pygame.init()
 
-card_balance(MY_HAND, CARD_LIST)
-card_balanceBOT(OPP_HAND,CARD_LIST)
+card_balance()
+card_balanceBOT()
+
 def Durak():
     while True:
         events()
