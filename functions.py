@@ -193,44 +193,40 @@ def Collection(window,width,height):
                             window.blit(RagnarosCover, (109, 0))
 
                         if x in range(int(width/3.2)+300,int(width/3.2)+400):
-                            COVER = RubyCover
+                            COVER = 'Ruby.jpg'
                             window.blit(RubyCover, (109, 0))
 
                         if x in range(int(width/3.2)+400,int(width/3.2)+500):
-                            COVER = LegendaryCard
+                            COVER = 'LegendaryCard.jpg'
                             window.blit(LegendaryCard, (109, 0))
 
                         if x in range(int(width/3.2)+500,int(width/3.2)+600):
-                            COVER = TavernCover
-                            window.blit(TavernCover, (109, 0))
-
-                        if x in range(int(width/3.2)+600,int(width/3.2)+700):
-                            COVER = TavernCover
+                            COVER = 'Tavern.jpg'
                             window.blit(TavernCover, (109, 0))
 
                     if y in range(450,600):
                         if x in range(int(width/3.2),int(width/3.2+100)):
-                                COVER = ColdCover
+                                COVER = 'Cold.jpg'
                                 window.blit(ColdCover, (109, 0))
 
                         if x in range(int(width/3.2)+100,int(WINDOW_WIDTH/3.2)+200):
-                                COVER = NYCover
+                                COVER = 'NY.jpg'
                                 window.blit(NYCover, (109, 0))
 
                         if x in range(int(WINDOW_WIDTH/3.2)+200,int(width/3.2)+300):
-                                COVER = LoveCover
+                                COVER = 'LoveisCost.jpg'
                                 window.blit(LoveCover, (109, 0))
 
                         if x in range(int(width/3.2)+300,int(width/3.2)+400):
-                                COVER = StarCraftCover
+                                COVER = 'StarCraft.jpg'
                                 window.blit(StarCraftCover, (109, 0))
 
                         if x in range(int(width/3.2)+400,int(width/3.2)+500):
-                                COVER = DalaranCard
+                                COVER = 'Dalaran.png'
                                 window.blit(DalaranCard, (109, 0))
 
                         if x in range(int(width/3.2)+500,int(width/3.2)+600):
-                                COVER = StandartCover
+                                COVER = 'Card.jpg'
                                 window.blit(StandartCover, (109, 0))
 
             pygame.display.update()
