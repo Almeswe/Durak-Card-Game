@@ -38,7 +38,7 @@ score = False
 exit = False
 
 WINDOW = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-BG = pygame.image.load("Cards/table2.png")
+BG = pygame.image.load("src/Other/table2.png")
 WINDOW_CAPTION = pygame.display.set_caption("Durak Reborn 19.10.2019")
 
 CARD_LIST = shuffle(["6_Bub",
@@ -91,11 +91,3 @@ CARD_SIZE_MyHand = [125,100]
 CARD_SIZE_OppHand = [125,100]
 CARD_SIZE_Table = [125,100]
 CARD_SIZE_DefList = [125,100]
-
-def test():
-    global OPP_HAND,MY_HAND,CARD_LIST
-
-    for i in range(15):
-        OPP_HAND.append(CARD_LIST[randint(0,len(CARD_LIST)-1)])
-    for i in range(10):
-        TABLE.append(CARD_LIST[randint(0,len(CARD_LIST)-1)])
