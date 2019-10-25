@@ -1,4 +1,5 @@
-from NewCardGame.constants import *
+from additional_functions import *
+from constants import *
 from time import sleep
 import pygame
 import sys
@@ -9,7 +10,230 @@ motion = False
 dragging_card = None
 draggingX = None
 draggingY = None
-gameOver = False
+
+def Menu(window,width,height):
+    global game,menu,collection,score,exit
+
+    window.blit(pygame.image.load("Cards/Menu.jpg"),(0,0))
+
+    font = pygame.font.Font(None,150)
+    smallfont = pygame.font.Font(None,20)
+    menubarsfont = pygame.font.Font(None,35)
+
+    AuthorText = smallfont.render("AlmesWe - 2019",1,(0,0,0))
+    DurakText = font.render("Durak Game",1,(45,140,255))
+
+    StartGameText = menubarsfont.render("Start Game",1,(0,0,0))
+    CollectionText = menubarsfont.render("Collection",1,(0,0,0))
+    ScoreText = menubarsfont.render("Score",1,(0,0,0))
+    ExitText = menubarsfont.render("Exit",1,(0,0,0))
+
+    margin_top = 13
+
+    window.blit(StartGameText,(width//2.2,height//3+margin_top))
+    window.blit(CollectionText,(width//2.2,height//3+50+margin_top))
+    window.blit(ScoreText,(width//2.12,height//3+100+margin_top))
+    window.blit(ExitText,(width//2.1,height//3+150+margin_top))
+
+    window.blit(DurakText,(width//3.5,0))
+    window.blit(AuthorText,(width-100,height-20))
+
+    pygame.draw.rect(window, [87, 182, 4], (width / 2.38, height / 3, 220, 50), 5)
+    pygame.draw.rect(window, [87, 182, 4], (width / 2.38, height / 3 + 50, 220, 50), 5)
+    pygame.draw.rect(window, [87, 182, 4], (width / 2.38, height / 3 + 100, 220, 50), 5)
+    pygame.draw.rect(window, [87, 182, 4], (width / 2.38, height / 3 + 150, 220, 50), 5)
+
+    pygame.display.update()
+    bool = True
+    while bool:
+        for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    bool = False
+
+                if event.type == pygame.MOUSEMOTION:
+                    x,y = event.pos
+                    if x in range(int(width/2.38),int(width/2.38+220)):
+
+                        if y in range(int(height/3),int(height/3+50)):
+                            pygame.draw.rect(window, [255,0,0], (width/2.38,height/3, 220, 50), 5)
+                        else:
+                            pygame.draw.rect(window, [87, 182, 4], (width/2.38,height/3, 220, 50), 5)
+
+                        if y in range(int(height/3)+51, int(height/3)+100):
+                            pygame.draw.rect(window, [255,0,0], (width/2.38,height/3+50, 220, 50), 5)
+                        else:
+                            pygame.draw.rect(window, [87, 182, 4], (width/2.38,height/3+50, 220, 50), 5)
+
+                        if y in range(int(height/3)+101, int(height/3)+150):
+                            pygame.draw.rect(window, [255,0,0], (width/2.38,height/3+100, 220, 50), 5)
+                        else:
+                            pygame.draw.rect(window, [87, 182, 4], (width/2.38,height/3+100, 220, 50), 5)
+
+                        if y in range(int(height/3)+151, int(height/3)+200):
+                            pygame.draw.rect(window, [255,0,0], (width/2.38,height/3+150, 220, 50), 5)
+                        else:
+                            pygame.draw.rect(window, [87, 182, 4], (width/2.38,height/3+150, 220, 50), 5)
+                    else:
+                        pygame.draw.rect(window, [87, 182, 4], (width / 2.38, height / 3, 220, 50), 5)
+                        pygame.draw.rect(window, [87, 182, 4], (width / 2.38, height / 3 + 50, 220, 50), 5)
+                        pygame.draw.rect(window, [87, 182, 4], (width / 2.38, height / 3 + 100, 220, 50), 5)
+                        pygame.draw.rect(window, [87, 182, 4], (width / 2.38, height / 3 + 150, 220, 50), 5)
+
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        x,y = event.pos
+                        if x in range(int(width/2.38),int(width/2.38+220)):
+
+                            if y in range(int(height/3),int(height/3+50)):
+
+                                game = True
+                                score = False
+                                collection = False
+                                exit = False
+                                menu = False
+                                card_balance()
+                                card_balanceBOT()
+                                pygame.display.update()
+                                bool = False
+                            if y in range(int(height/3)+51, int(height/3)+100):
+                                game = False
+                                score = False
+                                collection = True
+                                exit = False
+                                menu = False
+                                pygame.display.update()
+                                bool = False
+                            if y in range(int(height/3)+101, int(height/3)+150):
+                                game = False
+                                score = True
+                                collection = False
+                                exit = False
+                                menu = False
+                                pygame.display.update()
+                                bool = False
+                            if y in range(int(height/3)+151, int(height/3)+200):
+                                sys.exit()
+
+        pygame.display.update()
+
+def Collection(window,width,height):
+    global COVER
+    global menu, start_game, exit, collection, score
+
+    ColdCover = pygame.image.load("Cards/Covers/Cold.jpg")
+    GoldCover = pygame.image.load("Cards/Covers/Gold.jpg")
+    LavaCover = pygame.image.load("Cards/Covers/Lava.jpg")
+    LoveCover = pygame.image.load("Cards/Covers/LoveisCost.jpg")
+    NYCover = pygame.image.load("Cards/Covers/NY.jpg")
+    RagnarosCover = pygame.image.load("Cards/Covers/Ragnaros.jpg")
+    RubyCover = pygame.image.load("Cards/Covers/Ruby.jpg")
+    StarCraftCover = pygame.image.load("Cards/Covers/StarCraft.jpg")
+    TavernCover = pygame.image.load("Cards/Covers/Tavern.jpg")
+    UngoroCover = pygame.image.load("Cards/Covers/Ungoro.jpg")
+    StandartCover = pygame.image.load("Cards/Covers/Card.jpg")
+    LegendaryCard = pygame.image.load("Cards/Covers/LegendaryCard.jpg")
+    DalaranCard = pygame.image.load("Cards/Covers/Dalaran.png")
+
+    font = pygame.font.Font(None,60)
+
+    window.blit(pygame.image.load("Cards/Collection.jpg"),(0,0))
+    window.blit(pygame.image.load("Cards/Buttons/back.png"),(0,height-50))
+
+    window.blit(font.render("CURRENT COVER",1,(245,177,4)),(0,150))
+    window.blit(pygame.image.load("Cards/Covers/"+COVER),(109,0))
+
+    #covers
+    #up
+    window.blit(GoldCover,(WINDOW_WIDTH/3.2,300))
+    window.blit(LavaCover,(WINDOW_WIDTH/3.2+100,300))
+    window.blit(RagnarosCover,(WINDOW_WIDTH/3.2+200,300))
+    window.blit(RubyCover,(WINDOW_WIDTH/3.2+300,300))
+    window.blit(LegendaryCard,(WINDOW_WIDTH/3.2+400,300))
+    window.blit(TavernCover,(WINDOW_WIDTH/3.2+500,300))
+    #down
+    window.blit(ColdCover,(WINDOW_WIDTH/3.2,450))
+    window.blit(NYCover,(WINDOW_WIDTH/3.2+100,450))
+    window.blit(LoveCover,(WINDOW_WIDTH/3.2+200,450))
+    window.blit(StarCraftCover,(WINDOW_WIDTH/3.2+300,450))
+    window.blit(DalaranCard,(WINDOW_WIDTH/3.2+400,450))
+    window.blit(StandartCover,(WINDOW_WIDTH/3.2+500,450))
+    #
+
+
+    pygame.display.update()
+    booll = True
+    while booll:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                booll = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    x,y = event.pos
+                    if y in range (height-50,height):
+                        if x in range(0,150):
+                            menu = True
+                            collection = False
+                            booll = False
+                            pygame.display.update()
+
+                    if y in range(300,449):
+                        if x in range(int(width/3.2),int(width/3.2+100)):
+                            COVER = 'Gold.jpg'
+                            window.blit(GoldCover, (109, 0))
+
+                        if x in range(int(width/3.2)+100,int(width/3.2)+200):
+                            COVER = 'Lava.jpg'
+                            window.blit(LavaCover, (109, 0))
+
+                        if x in range(int(width/3.2)+200,int(width/3.2)+300):
+                            COVER = 'Ragnaros.jpg'
+                            window.blit(RagnarosCover, (109, 0))
+
+                        if x in range(int(width/3.2)+300,int(width/3.2)+400):
+                            COVER = RubyCover
+                            window.blit(RubyCover, (109, 0))
+
+                        if x in range(int(width/3.2)+400,int(width/3.2)+500):
+                            COVER = LegendaryCard
+                            window.blit(LegendaryCard, (109, 0))
+
+                        if x in range(int(width/3.2)+500,int(width/3.2)+600):
+                            COVER = TavernCover
+                            window.blit(TavernCover, (109, 0))
+
+                        if x in range(int(width/3.2)+600,int(width/3.2)+700):
+                            COVER = TavernCover
+                            window.blit(TavernCover, (109, 0))
+
+                    if y in range(450,600):
+                        if x in range(int(width/3.2),int(width/3.2+100)):
+                                COVER = ColdCover
+                                window.blit(ColdCover, (109, 0))
+
+                        if x in range(int(width/3.2)+100,int(WINDOW_WIDTH/3.2)+200):
+                                COVER = NYCover
+                                window.blit(NYCover, (109, 0))
+
+                        if x in range(int(WINDOW_WIDTH/3.2)+200,int(width/3.2)+300):
+                                COVER = LoveCover
+                                window.blit(LoveCover, (109, 0))
+
+                        if x in range(int(width/3.2)+300,int(width/3.2)+400):
+                                COVER = StarCraftCover
+                                window.blit(StarCraftCover, (109, 0))
+
+                        if x in range(int(width/3.2)+400,int(width/3.2)+500):
+                                COVER = DalaranCard
+                                window.blit(DalaranCard, (109, 0))
+
+                        if x in range(int(width/3.2)+500,int(width/3.2)+600):
+                                COVER = StandartCover
+                                window.blit(StandartCover, (109, 0))
+
+            pygame.display.update()
 
 def events():
     global motion,dragging_card
@@ -47,32 +271,91 @@ def events():
                 draggingX,draggingY = event.pos
 
 def check_winner(playersList):
-    global CARD_LIST,MY_HAND,OPP_HAND,TABLE,gameOver
+    global CARD_LIST,MY_HAND,OPP_HAND,TABLE,game
 
     if len(playersList) == 0 and len(CARD_LIST) == 0:
-        gameOver = True
+        game = False
 
 def update_window():
-    global gameOver,MY_HAND,OPP_HAND,DEFEND,TABLE,CARD_LIST,mydefend
+    global game,MY_HAND,OPP_HAND,DEFEND,TABLE,CARD_LIST,TRUMPCARD,mydefend
+    global menu,score,collection,exit
+    global bot_no_way,motion
 
-    check_winner(MY_HAND)
-    check_winner(OPP_HAND)
+    if menu:
+        Menu(WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT)
 
-    WINDOW.blit(BG,(0,0))
-    card_resizer()
-    card_sorter(MY_HAND)
-    card_sorter(OPP_HAND)
+    elif collection:
+        Collection(WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT)
 
-    draw_card_list()
-    draw_buttons()
-    button_visual_assistant()
+    elif game:
+        check_winner(MY_HAND)
+        check_winner(OPP_HAND)
 
-    draw_cards(False)
-    draw_dragged_card()
+        WINDOW.blit(BG, (0, 0))
+        card_resizer()
+        card_sorter(MY_HAND)
+        card_sorter(OPP_HAND)
+
+        draw_card_list()
+        draw_buttons()
+        button_visual_assistant()
+
+        draw_cards(False)
+        draw_dragged_card()
+
+        if not game:
+            menu = True
+            game = False
+            CARD_LIST = shuffle(["6_Bub",
+                                 "6_heart",
+                                 "6_Kr",
+                                 "6_pik",
+                                 "7_Bub",
+                                 "7_heart",
+                                 "7_Kr",
+                                 "7_pik",
+                                 "8_Bub",
+                                 "8_heart",
+                                 "8_Kr",
+                                 "8_pik",
+                                 "9_Bub",
+                                 "9_heart",
+                                 "9_Kr",
+                                 "9_pik",
+                                 "10_Bub",
+                                 "10_heart",
+                                 "10_Kr",
+                                 "10_pik",
+                                 "Ace_Bub",
+                                 "Ace_heart",
+                                 "Ace_Kr",
+                                 "Ace_pik",
+                                 "J_Bub",
+                                 "J_heart",
+                                 "J_Kr",
+                                 "J_pik",
+                                 "K_Bub",
+                                 "K_heart",
+                                 "K_Kr",
+                                 "K_pik",
+                                 "Q_Bub",
+                                 "Q_heart",
+                                 "Q_Kr",
+                                 "Q_pik", ])
+            OPP_HAND = []
+            TABLE = []
+            DEFEND = fill_defendlist()
+            MY_HAND = []
+
+            TRUMPCARD = CARD_LIST.pop(randint(0, len(CARD_LIST) - 1))
+            CARD_LIST.append(TRUMPCARD)
+            TRUMPSUIT = card_suit(TRUMPCARD)
+
+            mydefend = False
+            bot_no_way = False
+            motion = False
 
     pygame.display.update()
-    if gameOver:
-        sys.exit()
 
 def bot_action_defend():
     global OPP_HAND,TABLE,DEFEND,TRUMPSUIT
@@ -104,18 +387,18 @@ def bot_action_defend():
             for tablecard in TABLE:
                 for oppcard in OPP_HAND:
                     if DEFEND[TABLE.index(tablecard)] == '':
-                                if card_suit(oppcard) == card_suit(tablecard):
-                                    if card_priority(oppcard) > card_priority(tablecard):
-                                        OPP_HAND.pop(OPP_HAND.index(oppcard))
-                                        DEFEND[TABLE.index(tablecard)] = oppcard
-                                        update_window()
-                                        beated = True
-
-                                elif card_suit(oppcard) == TRUMPSUIT:
+                            if card_suit(oppcard) == card_suit(tablecard):
+                                if card_priority(oppcard) > card_priority(tablecard):
                                     OPP_HAND.pop(OPP_HAND.index(oppcard))
                                     DEFEND[TABLE.index(tablecard)] = oppcard
                                     update_window()
                                     beated = True
+
+                            elif card_suit(oppcard) == TRUMPSUIT:
+                                OPP_HAND.pop(OPP_HAND.index(oppcard))
+                                DEFEND[TABLE.index(tablecard)] = oppcard
+                                update_window()
+                                beated = True
 
             for card in DEFEND:
                 if card != '':
