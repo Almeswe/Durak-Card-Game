@@ -27,17 +27,15 @@ def card_suit(trumpcard):
 
     return suit
 
-def test():
-    global OPP_HAND,MY_HAND,CARD_LIST
-
-    for i in range(15):
-        OPP_HAND.append(CARD_LIST[randint(0,len(CARD_LIST)-1)])
-    for i in range(10):
-        TABLE.append(CARD_LIST[randint(0,len(CARD_LIST)-1)])
-
 root = Tk()
 WINDOW_HEIGHT = root.winfo_screenheight()
 WINDOW_WIDTH = root.winfo_screenwidth()
+
+menu = True
+game = True
+collection = False
+score = False
+exit = False
 
 WINDOW = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 BG = pygame.image.load("Cards/table2.png")
@@ -87,9 +85,17 @@ MY_HAND = []
 TRUMPCARD = CARD_LIST.pop(randint(0, len(CARD_LIST) - 1))
 CARD_LIST.append(TRUMPCARD)
 TRUMPSUIT = card_suit(TRUMPCARD)
-COVER = 'Dalaran.png'
+COVER = 'Card.jpg'
 
 CARD_SIZE_MyHand = [125,100]
 CARD_SIZE_OppHand = [125,100]
 CARD_SIZE_Table = [125,100]
 CARD_SIZE_DefList = [125,100]
+
+def test():
+    global OPP_HAND,MY_HAND,CARD_LIST
+
+    for i in range(15):
+        OPP_HAND.append(CARD_LIST[randint(0,len(CARD_LIST)-1)])
+    for i in range(10):
+        TABLE.append(CARD_LIST[randint(0,len(CARD_LIST)-1)])
