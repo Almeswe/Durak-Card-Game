@@ -14,7 +14,7 @@ draggingY = None
 def Menu(window,width,height):
     global game,menu,collection,score,exit
 
-    window.blit(pygame.image.load("Cards/Menu.jpg"),(0,0))
+    window.blit(pygame.image.load("src/Other/Menu.jpg"),(0,0))
 
     font = pygame.font.Font(None,150)
     smallfont = pygame.font.Font(None,20)
@@ -138,8 +138,8 @@ def Collection(window,width,height):
 
     font = pygame.font.Font(None,60)
 
-    window.blit(pygame.image.load("Cards/Collection.jpg"),(0,0))
-    window.blit(pygame.image.load("Cards/Buttons/back.png"),(0,height-50))
+    window.blit(pygame.image.load("src/Other/Collection.jpg"),(0,0))
+    window.blit(pygame.image.load("scr/Other/back.png"),(0,height-50))
 
     window.blit(font.render("CURRENT COVER",1,(245,177,4)),(0,150))
     window.blit(pygame.image.load("src/Covers/"+COVER),(109,0))
