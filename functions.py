@@ -273,9 +273,9 @@ def check_winner(playersList):
         game = False
 
 def update_window():
-    global game,MY_HAND,OPP_HAND,DEFEND,TABLE,CARD_LIST,TRUMPCARD,mydefend
-    global menu,score,collection,exit
-    global bot_no_way,motion
+    global MY_HAND,OPP_HAND,DEFEND,TABLE,CARD_LIST,TRUMPCARD,TRUMPSUIT
+    global menu,score,collection,exit,game
+    global bot_no_way,motion,mydefend
 
     if menu:
         Menu(WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT)
