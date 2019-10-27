@@ -1,4 +1,4 @@
-from NewCardGame.functions import events,update_window
+from functions import events,update_window
 import pygame
 
 pygame.init()
