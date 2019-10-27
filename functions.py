@@ -729,7 +729,7 @@ def draw_dragged_card():
     global draggingX,draggingY
     if motion:
         try:
-            WINDOW.blit(pygame.image.load("Cards/" + dragging_card + ".png"), (draggingX-50, draggingY-75))
+            WINDOW.blit(pygame.image.load("src/Cards/" + dragging_card + ".png"), (draggingX-50, draggingY-75))
             font = pygame.font.Font(None,50)
             if mydefend == False:
                 pygame.draw.line(WINDOW,(0,0,0),(0,300),(WINDOW_WIDTH,300),3)
@@ -750,8 +750,8 @@ def draw_card_list():
     fontt = pygame.font.Font(None,40)
 
     if len(CARD_LIST) > 1:
-        WINDOW.blit(pygame.image.load("Cards/"+TRUMPCARD+".png"),(1080,150))
-        WINDOW.blit(pygame.image.load("Cards/Covers/"+COVER),(1100,100))
+        WINDOW.blit(pygame.image.load("src/Cards/"+TRUMPCARD+".png"),(1080,150))
+        WINDOW.blit(pygame.image.load("src/Covers/"+COVER),(1100,100))
         if len(CARD_LIST) > 30:
             WINDOW.blit(fontt.render('> 30',1,(255,0,0)),(1100,90))
         elif len(CARD_LIST) > 20:
@@ -769,30 +769,30 @@ def draw_card_list():
 
     if len(CARD_LIST) == 1:
         WINDOW.blit(fontt.render(str(len(CARD_LIST)), 1, (0, 0, 0)), (1100, 90))
-        WINDOW.blit(pygame.image.load("Cards/"+TRUMPCARD+".png"),(1080,150))
+        WINDOW.blit(pygame.image.load("src/Cards/"+TRUMPCARD+".png"),(1080,150))
 
 def draw_cards(visible):
     global MY_HAND,OPP_HAND,TABLE,DEFEND
 
     counter = 0
     for card in MY_HAND:
-        WINDOW.blit(pygame.image.load("Cards/"+card+".png"),(counter*CARD_SIZE_MyHand[1],WINDOW_HEIGHT-CARD_SIZE_MyHand[0]-50))
+        WINDOW.blit(pygame.image.load("src/Cards/"+card+".png"),(counter*CARD_SIZE_MyHand[1],WINDOW_HEIGHT-CARD_SIZE_MyHand[0]-50))
         counter += 1
     counter = 0
     for card in TABLE:
-        WINDOW.blit(pygame.image.load("Cards/"+card+".png"),(counter*CARD_SIZE_Table[1],300))
+        WINDOW.blit(pygame.image.load("src/Cards/"+card+".png"),(counter*CARD_SIZE_Table[1],300))
         counter += 1
     counter = 0
     for card in OPP_HAND:
         if visible:
-            WINDOW.blit(pygame.image.load("Cards/"+card+".png"),(counter*CARD_SIZE_OppHand[1],50))
+            WINDOW.blit(pygame.image.load("src/Cards/"+card+".png"),(counter*CARD_SIZE_OppHand[1],50))
         else:
-            WINDOW.blit(pygame.image.load("Cards/Covers/"+COVER),(counter*CARD_SIZE_OppHand[1],50))
+            WINDOW.blit(pygame.image.load("src/Covers/"+COVER),(counter*CARD_SIZE_OppHand[1],50))
         counter += 1
     counter = 0
     for card in DEFEND:
         try:
-            WINDOW.blit(pygame.image.load("Cards/"+card+".png"),(counter*CARD_SIZE_DefList[1],400))
+            WINDOW.blit(pygame.image.load("src/Cards/"+card+".png"),(counter*CARD_SIZE_DefList[1],400))
         except:
             pass
         counter += 1
