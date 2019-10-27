@@ -19,7 +19,7 @@ def Menu(window,width,height):
     global game,menu,collection,score,exit
     global mydefend
 
-    window.blit(pygame.image.load("Cards/Menu.jpg"),(0,0))
+    window.blit(pygame.image.load("src/Other/Menu.jpg"),(0,0))
 
     font = pygame.font.Font(None,150)
     smallfont = pygame.font.Font(None,20)
@@ -136,27 +136,27 @@ def Collection(window,width,height):
     global COVER
     global menu, start_game, exit, collection, score
 
-    ColdCover = pygame.image.load("Cards/Covers/Cold.jpg")
-    GoldCover = pygame.image.load("Cards/Covers/Gold.jpg")
-    LavaCover = pygame.image.load("Cards/Covers/Lava.jpg")
-    LoveCover = pygame.image.load("Cards/Covers/LoveisCost.jpg")
-    NYCover = pygame.image.load("Cards/Covers/NY.jpg")
-    RagnarosCover = pygame.image.load("Cards/Covers/Ragnaros.jpg")
-    RubyCover = pygame.image.load("Cards/Covers/Ruby.jpg")
-    StarCraftCover = pygame.image.load("Cards/Covers/StarCraft.jpg")
-    TavernCover = pygame.image.load("Cards/Covers/Tavern.jpg")
-    UngoroCover = pygame.image.load("Cards/Covers/Ungoro.jpg")
-    StandartCover = pygame.image.load("Cards/Covers/Card.jpg")
-    LegendaryCard = pygame.image.load("Cards/Covers/LegendaryCard.jpg")
-    DalaranCard = pygame.image.load("Cards/Covers/Dalaran.png")
+    ColdCover = pygame.image.load("src/Covers/Cold.jpg")
+    GoldCover = pygame.image.load("src/Covers/Gold.jpg")
+    LavaCover = pygame.image.load("src/Covers/Lava.jpg")
+    LoveCover = pygame.image.load("src/Covers/LoveisCost.jpg")
+    NYCover = pygame.image.load("src/Covers/NY.jpg")
+    RagnarosCover = pygame.image.load("src/Covers/Ragnaros.jpg")
+    RubyCover = pygame.image.load("src/Covers/Ruby.jpg")
+    StarCraftCover = pygame.image.load("src/Covers/StarCraft.jpg")
+    TavernCover = pygame.image.load("src/Covers/Tavern.jpg")
+    UngoroCover = pygame.image.load("src/Covers/Ungoro.jpg")
+    StandartCover = pygame.image.load("src/Covers/Card.jpg")
+    LegendaryCard = pygame.image.load("src/Covers/LegendaryCard.jpg")
+    DalaranCard = pygame.image.load("src/Covers/Dalaran.png")
 
     font = pygame.font.Font(None,60)
 
-    window.blit(pygame.image.load("Cards/Collection.jpg"),(0,0))
-    window.blit(pygame.image.load("Cards/Buttons/back.png"),(0,height-50))
+    window.blit(pygame.image.load("src/Other/Collection.jpg"),(0,0))
+    window.blit(pygame.image.load("src/Other/back.png"),(0,height-50))
 
     window.blit(font.render("CURRENT COVER",1,(245,177,4)),(0,150))
-    window.blit(pygame.image.load("Cards/Covers/"+COVER),(109,0))
+    window.blit(pygame.image.load("src/Covers/"+COVER),(109,0))
 
     #covers
     #up
