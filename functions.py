@@ -717,12 +717,12 @@ def draw_buttons():
 
     if mydefend:
         #взять все,я походил,
-        WINDOW.blit(font_for_buttons.render("Беру все",1,(9,76,152)),(35,617))
-        WINDOW.blit(font_for_buttons.render("Я отбился",1,(9,76,152)),(215,617))
+        WINDOW.blit(font_for_buttons.render("Take all",1,(9,76,152)),(35,617))
+        WINDOW.blit(font_for_buttons.render("I'm done",1,(9,76,152)),(215,617))
     else:
         #Бери,я все;
-        WINDOW.blit(font_for_buttons.render("Бот берет",1,(9,76,152)),(35,617))
-        WINDOW.blit(font_for_buttons.render("Я походил",1,(9,76,152)),(215,617))
+        WINDOW.blit(font_for_buttons.render("Bot takes all",1,(9,76,152)),(35,617))
+        WINDOW.blit(font_for_buttons.render("I'm done",1,(9,76,152)),(215,617))
 
 def draw_dragged_card():
     global dragging_card
