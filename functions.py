@@ -1,8 +1,9 @@
-from additional_functions import *
 from constants import *
 from time import sleep
+from random import randint
 import pygame
 import sys
+import os
 
 mydefend = False
 bot_no_way = False
@@ -11,10 +12,14 @@ dragging_card = None
 draggingX = None
 draggingY = None
 
+Wins = 0
+Loses = 0
+
 def Menu(window,width,height):
     global game,menu,collection,score,exit
+    global mydefend
 
-    window.blit(pygame.image.load("src/Other/Menu.jpg"),(0,0))
+    window.blit(pygame.image.load("Cards/Menu.jpg"),(0,0))
 
     font = pygame.font.Font(None,150)
     smallfont = pygame.font.Font(None,20)
@@ -95,6 +100,14 @@ def Menu(window,width,height):
                                 menu = False
                                 card_balance()
                                 card_balanceBOT()
+
+                                coin = randint(0,1)
+                                if coin == 0:
+                                    mydefend = False
+                                else:
+                                    mydefend = True
+                                    bot_action_attack()
+
                                 pygame.display.update()
                                 bool = False
                             if y in range(int(height/3)+51, int(height/3)+100):
@@ -106,6 +119,7 @@ def Menu(window,width,height):
                                 pygame.display.update()
                                 bool = False
                             if y in range(int(height/3)+101, int(height/3)+150):
+                                pass
                                 game = False
                                 score = True
                                 collection = False
@@ -122,27 +136,27 @@ def Collection(window,width,height):
     global COVER
     global menu, start_game, exit, collection, score
 
-    ColdCover = pygame.image.load("src/Covers/Cold.jpg")
-    GoldCover = pygame.image.load("src/Covers/Gold.jpg")
-    LavaCover = pygame.image.load("src/Covers/Lava.jpg")
-    LoveCover = pygame.image.load("src/Covers/LoveisCost.jpg")
-    NYCover = pygame.image.load("src/Covers/NY.jpg")
-    RagnarosCover = pygame.image.load("src/Covers/Ragnaros.jpg")
-    RubyCover = pygame.image.load("src/Covers/Ruby.jpg")
-    StarCraftCover = pygame.image.load("src/Covers/StarCraft.jpg")
-    TavernCover = pygame.image.load("src/Covers/Tavern.jpg")
-    UngoroCover = pygame.image.load("src/Covers/Ungoro.jpg")
-    StandartCover = pygame.image.load("src/Covers/Card.jpg")
-    LegendaryCard = pygame.image.load("src/Covers/LegendaryCard.jpg")
-    DalaranCard = pygame.image.load("src/Covers/Dalaran.png")
+    ColdCover = pygame.image.load("Cards/Covers/Cold.jpg")
+    GoldCover = pygame.image.load("Cards/Covers/Gold.jpg")
+    LavaCover = pygame.image.load("Cards/Covers/Lava.jpg")
+    LoveCover = pygame.image.load("Cards/Covers/LoveisCost.jpg")
+    NYCover = pygame.image.load("Cards/Covers/NY.jpg")
+    RagnarosCover = pygame.image.load("Cards/Covers/Ragnaros.jpg")
+    RubyCover = pygame.image.load("Cards/Covers/Ruby.jpg")
+    StarCraftCover = pygame.image.load("Cards/Covers/StarCraft.jpg")
+    TavernCover = pygame.image.load("Cards/Covers/Tavern.jpg")
+    UngoroCover = pygame.image.load("Cards/Covers/Ungoro.jpg")
+    StandartCover = pygame.image.load("Cards/Covers/Card.jpg")
+    LegendaryCard = pygame.image.load("Cards/Covers/LegendaryCard.jpg")
+    DalaranCard = pygame.image.load("Cards/Covers/Dalaran.png")
 
     font = pygame.font.Font(None,60)
 
-    window.blit(pygame.image.load("src/Other/Collection.jpg"),(0,0))
-    window.blit(pygame.image.load("scr/Other/back.png"),(0,height-50))
+    window.blit(pygame.image.load("Cards/Collection.jpg"),(0,0))
+    window.blit(pygame.image.load("Cards/Buttons/back.png"),(0,height-50))
 
     window.blit(font.render("CURRENT COVER",1,(245,177,4)),(0,150))
-    window.blit(pygame.image.load("src/Covers/"+COVER),(109,0))
+    window.blit(pygame.image.load("Cards/Covers/"+COVER),(109,0))
 
     #covers
     #up
@@ -231,15 +245,92 @@ def Collection(window,width,height):
 
             pygame.display.update()
 
+def Score(window,width,height,Open):
+    global Wins,Loses
+    global score,menu
+
+
+    scorefont = pygame.font.Font(None,100)
+
+    if Open:
+        try:
+            os.mkdir(os.getcwd() + "\\Data")
+        except:
+            pass
+
+        try:
+            readlist = []
+            scorefile = open("Data\Score.txt","r")
+            for line in scorefile:
+                try:
+                    readlist.append(int(line))
+                except:
+                    print('Повреждение')
+                    readlist[0] = 0
+                    readlist[1] = 0
+                    break
+
+            Wins = readlist[0]
+            Loses = readlist[1]
+            scorefile.close()
+
+        except:
+            scorefile = open("Data\Score.txt",'w')
+            scorefile.write(str(0) +'\n')
+            scorefile.write(str(0) + '\n')
+            Wins = 0
+            Loses = 0
+
+        #
+        window.blit(pygame.image.load('src/Other/Collection.jpg'),(0,0))
+        window.blit(pygame.image.load("src/Other/back.png"),(0,height-50))
+        window.blit(scorefont.render('Wins: '+str(Wins),1,(0,0,0)),(width//3,200))
+        window.blit(scorefont.render('Loses: '+str(Loses),1,(0,0,0)),(width//3,400))
+        try:
+            window.blit(scorefont.render('Winrate: '+str(round(Wins/(Wins+Loses)*100))+'%',1,(0,0,0)),(width//3,600))
+        except:
+            window.blit(scorefont.render('Winrate: '+str(0)+'%',1,(0,0,0)),(width//3,600))
+        pygame.display.update()
+        #
+
+        booll = True
+        while booll:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    booll = False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        x,y = event.pos
+                        if y in range(height-50,height):
+                            if x in range(0,150):
+                                score = False
+                                menu = True
+                                booll = False
+
+    else:
+        try:
+            scorefile = open("Data\Score.txt", 'w')
+            scorefile.write(str(Wins) +'\n')
+            scorefile.write(str(Loses) +'\n')
+        except:
+            scorefile = open("Data\Score.txt", 'w')
+            scorefile.write('0'+"\n")
+            scorefile.write('0'+"\n")
+
 def events():
     global motion,dragging_card
     global draggingX,draggingY
     global mydefend
     global TABLE,DEFEND
+    global Wins,Loses
 
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
+            Loses += 1
+            Score(WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT,False)
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -266,14 +357,31 @@ def events():
             if event.type == pygame.MOUSEMOTION:
                 draggingX,draggingY = event.pos
 
-def check_winner(playersList):
+def check_winner():
     global CARD_LIST,MY_HAND,OPP_HAND,TABLE,game
+    global WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT
+    global Wins,Loses
 
-    if len(playersList) == 0 and len(CARD_LIST) == 0:
+    font = pygame.font.Font(None,70)
+
+    if len(MY_HAND) == 0 and len(CARD_LIST) == 0:
+        WINDOW.blit(font.render("YOU WIN",1,(randint(0,255),randint(0,255),randint(0,255))),(WINDOW_WIDTH/3,WINDOW_HEIGHT/2))
+        Wins += 1
+        Score(WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT,False)
+        pygame.display.update()
+        sleep(3)
+        game = False
+
+    if len(OPP_HAND) == 0 and len(CARD_LIST) == 0:
+        WINDOW.blit(font.render("YOU LOST",1,(randint(0,255),randint(0,255),randint(0,255))),(WINDOW_WIDTH/3,WINDOW_HEIGHT/2))
+        Loses += 1
+        Score(WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT,False)
+        pygame.display.update()
+        sleep(3)
         game = False
 
 def update_window():
-    global MY_HAND,OPP_HAND,DEFEND,TABLE,CARD_LIST,TRUMPCARD,TRUMPSUIT
+    global MY_HAND,OPP_HAND,DEFEND,TABLE,CARD_LIST,TRUMPCARD,TRUMPSUIT,WINDOW
     global menu,score,collection,exit,game
     global bot_no_way,motion,mydefend
 
@@ -283,10 +391,10 @@ def update_window():
     elif collection:
         Collection(WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT)
 
-    elif game:
-        check_winner(MY_HAND)
-        check_winner(OPP_HAND)
+    elif score:
+        Score(WINDOW,WINDOW_WIDTH,WINDOW_HEIGHT,True)
 
+    elif game:
         WINDOW.blit(BG, (0, 0))
         card_resizer()
         card_sorter(MY_HAND)
@@ -298,6 +406,8 @@ def update_window():
 
         draw_cards(False)
         draw_dragged_card()
+
+        check_winner()
 
         if not game:
             menu = True
@@ -405,10 +515,8 @@ def bot_action_defend():
             else:
                     print(list)
                     if len(TABLE) > 1:
-                        cleartable = []
                         for tablecard in range(len(list)-1):
                             for clonecard in range(tablecard+1,len(list)-1):
-                                print(list[tablecard],list[clonecard])
                                 if list[tablecard] == list[clonecard]:
                                     list.pop(clonecard)
                                 else:
@@ -621,7 +729,7 @@ def draw_dragged_card():
     global draggingX,draggingY
     if motion:
         try:
-            WINDOW.blit(pygame.image.load("src/Cards/" + dragging_card + ".png"), (draggingX-50, draggingY-75))
+            WINDOW.blit(pygame.image.load("Cards/" + dragging_card + ".png"), (draggingX-50, draggingY-75))
             font = pygame.font.Font(None,50)
             if mydefend == False:
                 pygame.draw.line(WINDOW,(0,0,0),(0,300),(WINDOW_WIDTH,300),3)
@@ -639,38 +747,52 @@ def draw_card_list():
     global COVER,CARD_LIST,TRUMPCARD
     global WINDOW
 
-    fontt = pygame.font.Font(None,30)
+    fontt = pygame.font.Font(None,40)
 
     if len(CARD_LIST) > 1:
-        WINDOW.blit(pygame.image.load("src/Cards/"+TRUMPCARD+".png"),(1080,150))
-        WINDOW.blit(pygame.image.load("src/Covers/"+COVER),(1100,100))
-        WINDOW.blit(fontt.render(str(len(CARD_LIST)),1,(0,0,0)),(1100,90))
+        WINDOW.blit(pygame.image.load("Cards/"+TRUMPCARD+".png"),(1080,150))
+        WINDOW.blit(pygame.image.load("Cards/Covers/"+COVER),(1100,100))
+        if len(CARD_LIST) > 30:
+            WINDOW.blit(fontt.render('> 30',1,(255,0,0)),(1100,90))
+        elif len(CARD_LIST) > 20:
+            WINDOW.blit(fontt.render('> 20', 1, (255, 0, 0)), (1100, 90))
+        elif len(CARD_LIST) > 15:
+            WINDOW.blit(fontt.render('> 15', 1, (255, 0, 0)), (1100, 90))
+        elif len(CARD_LIST) > 10:
+            WINDOW.blit(fontt.render('> 10', 1, (255, 0, 0)), (1100, 90))
+        elif len(CARD_LIST) <= 3:
+            WINDOW.blit(fontt.render(str(len(CARD_LIST)), 1, (0, 0, 0)), (1100, 90))
+        elif len(CARD_LIST) < 5:
+            WINDOW.blit(fontt.render('< 5', 1, (255, 0, 0)), (1100, 90))
+        elif len(CARD_LIST) <= 10:
+            WINDOW.blit(fontt.render('< 10', 1, (255, 0, 0)), (1100, 90))
 
     if len(CARD_LIST) == 1:
-        WINDOW.blit(pygame.image.load("src/Cards/"+TRUMPCARD+".png"),(1080,150))
+        WINDOW.blit(fontt.render(str(len(CARD_LIST)), 1, (0, 0, 0)), (1100, 90))
+        WINDOW.blit(pygame.image.load("Cards/"+TRUMPCARD+".png"),(1080,150))
 
 def draw_cards(visible):
     global MY_HAND,OPP_HAND,TABLE,DEFEND
 
     counter = 0
     for card in MY_HAND:
-        WINDOW.blit(pygame.image.load("src/Cards/"+card+".png"),(counter*CARD_SIZE_MyHand[1],WINDOW_HEIGHT-CARD_SIZE_MyHand[0]-50))
+        WINDOW.blit(pygame.image.load("Cards/"+card+".png"),(counter*CARD_SIZE_MyHand[1],WINDOW_HEIGHT-CARD_SIZE_MyHand[0]-50))
         counter += 1
     counter = 0
     for card in TABLE:
-        WINDOW.blit(pygame.image.load("src/Cards/"+card+".png"),(counter*CARD_SIZE_Table[1],300))
+        WINDOW.blit(pygame.image.load("Cards/"+card+".png"),(counter*CARD_SIZE_Table[1],300))
         counter += 1
     counter = 0
     for card in OPP_HAND:
         if visible:
-            WINDOW.blit(pygame.image.load("src/Cards/"+card+".png"),(counter*CARD_SIZE_OppHand[1],50))
+            WINDOW.blit(pygame.image.load("Cards/"+card+".png"),(counter*CARD_SIZE_OppHand[1],50))
         else:
-            WINDOW.blit(pygame.image.load("src/Covers/"+COVER),(counter*CARD_SIZE_OppHand[1],50))
+            WINDOW.blit(pygame.image.load("Cards/Covers/"+COVER),(counter*CARD_SIZE_OppHand[1],50))
         counter += 1
     counter = 0
     for card in DEFEND:
         try:
-            WINDOW.blit(pygame.image.load("src/Cards/"+card+".png"),(counter*CARD_SIZE_DefList[1],400))
+            WINDOW.blit(pygame.image.load("Cards/"+card+".png"),(counter*CARD_SIZE_DefList[1],400))
         except:
             pass
         counter += 1
